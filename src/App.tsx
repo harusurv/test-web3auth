@@ -118,7 +118,13 @@ function App() {
           }
         }
         else{
-          setInvalidKey(true)
+          if(localStorage.getItem("key") != undefined){
+            setSecretKey(localStorage.getItem("key"))
+          }
+          else{
+            setInvalidKey(true)
+          }
+
         }
 
       } catch (error) {
@@ -127,7 +133,7 @@ function App() {
     };
 
     init();
-  }, []);
+  }, [secretKey]);
   const logout = async () => {
     if (!web3auth) {
       uiConsole("web3auth not initialized yet");
