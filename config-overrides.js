@@ -3,7 +3,7 @@ const webpack = require("webpack");
 module.exports = function override(config) {
   const fallback = config.resolve.fallback || {};
   Object.assign(fallback, {
-    crypto: false,
+    crypto: require.resolve("crypto-browserify"),
     stream: false,
     assert: false,
     http: false,
@@ -11,7 +11,7 @@ module.exports = function override(config) {
     path:require.resolve("path-browserify"),
     os: false,
     url: false,
-    zlib: false
+    zlib: false,
   });
   config.resolve.fallback = fallback;
   config.plugins = (config.plugins || []).concat([
