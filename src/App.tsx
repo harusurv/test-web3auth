@@ -146,17 +146,6 @@ function App() {
     window.open("infinity://?type=auth&hash="+encryptKey(privateKey,secretKey))
   };
 
-
-  // const changeNetwork = async () => {
-  //   if (!provider) {
-  //     uiConsole("provider not initialized yet");
-  //     return;
-  //   }
-  //   const rpc = new RPC(provider);
-  //   const privateKey = await rpc.getPrivateKey();
-  //   uiConsole(privateKey);
-  // };
-
   function uiConsole(...args: any[]): void {
     const el = document.querySelector("#console>p");
     if (el) {
@@ -168,7 +157,6 @@ function App() {
     <>
       <div className="flex-container">
         <button disabled={invalidKey} onClick={async ()=>{
-
           const rpc = new RPC(provider as SafeEventEmitterProvider);
           const privateKey = await rpc.getPrivateKey();
           const secretKey = localStorage.getItem("key") as string;
