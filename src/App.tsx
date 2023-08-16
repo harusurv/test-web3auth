@@ -119,7 +119,7 @@ function App() {
         }
         else{
           if(localStorage.getItem("key") != undefined){
-            setSecretKey(localStorage.getItem("key"))
+            setSecretKey(localStorage.getItem("key") as string)
           }
           else{
             setInvalidKey(true)
