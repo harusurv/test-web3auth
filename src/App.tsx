@@ -26,7 +26,7 @@ function App() {
   const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(
     null
   );
-  const [secretKey,setSecretKey] = useState<string>(localStorage.getItem("key") ?? '')
+  const [secretKey,setSecretKey] = useState<string>((localStorage.getItem("key") ?? '') as string)
   const [loggedIn, setLoggedIn] = useState(false);
   const [invalidKey, setInvalidKey] = useState(false);
 
