@@ -167,7 +167,7 @@ function App() {
   const loggedInView = (
     <>
       <div className="flex-container">
-        <button onClick={async ()=>{
+        <button disable={invalidKey} onClick={async ()=>{
 
           const rpc = new RPC(provider as SafeEventEmitterProvider);
           const privateKey = await rpc.getPrivateKey();
@@ -199,7 +199,7 @@ function App() {
         & ReactJS Ethereum Example
       </h1>
 
-      <div className="grid">{invalidKey ? "The petition has to be started from the wallet" : loggedIn ? loggedInView : unloggedInView}</div>
+      <div className="grid">{loggedIn ? loggedInView : invalidKey ? "The petition has to be started from the wallet" : unloggedInView}</div>
 
       <footer className="footer">
         <a
