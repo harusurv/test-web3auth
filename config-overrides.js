@@ -21,8 +21,7 @@ module.exports = function override(config) {
     }),
     new webpack.DefinePlugin({
       'process.env.RANDOM_IV': JSON.stringify(process.env.RANDOM_IV),
-      'process.env.CLIENT_ID': JSON.stringify(process.env.CLIENT_ID),
-      'process.env.PORT': JSON.stringify(process.env.PORT)
+      'process.env.CLIENT_ID': JSON.stringify(process.env.CLIENT_ID)
     })
   ]);
   config.ignoreWarnings = [/Failed to parse source map/];
