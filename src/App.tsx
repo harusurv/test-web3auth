@@ -32,10 +32,6 @@ function App() {
   useEffect(() => {
     const init = async () => {
       try {
-        const params = new URLSearchParams(window.location.search);
-        if(params.get('key') != undefined && (params.get('key') as string).length > 0){
-          localStorage.setItem("key", params.get('key') as string);
-        }
         const web3auth = new Web3Auth({
           clientId:clientId as string,
           chainConfig: {
@@ -113,6 +109,15 @@ function App() {
         console.error(error);
       }
     };
+    const params = new URLSearchParams(window.location.search);
+    if(params.get('key') != undefined && (params.get('key') as string).length > 0){
+      localStorage.setItem("key", params.get('key') as string);
+    }
+    else{
+      if(!window.location.hash) {
+        setInvalidKey(true)
+      }
+    }
 
     init();
   }, []);
@@ -122,6 +127,7 @@ function App() {
       return;
     }
     await web3auth.logout();
+    localStorage.removeItem("key");
     setProvider(null);
     setLoggedIn(false);
   };
