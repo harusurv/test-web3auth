@@ -35,90 +35,80 @@ function App() {
         const params = new URLSearchParams(window.location.search);
         if(params.get('key') != undefined && (params.get('key') as string).length > 0){
           localStorage.setItem("key", params.get('key') as string);
-          const web3auth = new Web3Auth({
-            clientId:clientId as string,
-            chainConfig: {
-              chainNamespace: CHAIN_NAMESPACES.EIP155,
-              chainId: "0x1",
-              rpcTarget: "https://rpc.ankr.com/eth", // This is the public RPC we have added, please pass on your own endpoint while creating an app
-            },
-            uiConfig: {
-              appName: "W3A",
-              appLogo: "https://web3auth.io/images/w3a-L-Favicon-1.svg", // Your App Logo Here
-              theme: "light",
-              loginMethodsOrder: ["google","apple",  "twitter"],
+        }
+        const web3auth = new Web3Auth({
+          clientId:clientId as string,
+          chainConfig: {
+            chainNamespace: CHAIN_NAMESPACES.EIP155,
+            chainId: "0x1",
+            rpcTarget: "https://rpc.ankr.com/eth", // This is the public RPC we have added, please pass on your own endpoint while creating an app
+          },
+          uiConfig: {
+            appName: "W3A",
+            appLogo: "https://web3auth.io/images/w3a-L-Favicon-1.svg", // Your App Logo Here
+            theme: "light",
+            loginMethodsOrder: ["google","apple",  "twitter"],
+            defaultLanguage: "en", // en, de, ja, ko, zh, es, fr, pt, nl
+            loginGridCol: 3,
+            primaryButton: "socialLogin", // "externalLogin" | "socialLogin" | "emailLogin"
+          },
+          web3AuthNetwork: "cyan",
+        });
+
+        const openloginAdapter = new OpenloginAdapter({
+          loginSettings: {
+            mfaLevel: "optional",
+          },
+          adapterSettings: {
+            uxMode: "redirect", // "redirect" | "popup"
+            whiteLabel: {
+              name: "Your app Name",
+              logoLight: "https://web3auth.io/images/w3a-L-Favicon-1.svg",
+              logoDark: "https://web3auth.io/images/w3a-D-Favicon-1.svg",
               defaultLanguage: "en", // en, de, ja, ko, zh, es, fr, pt, nl
-              loginGridCol: 3,
-              primaryButton: "socialLogin", // "externalLogin" | "socialLogin" | "emailLogin"
+              dark: false, // whether to enable dark mode. defaultValue: false
             },
-            web3AuthNetwork: "cyan",
-          });
-
-          const openloginAdapter = new OpenloginAdapter({
-            loginSettings: {
-              mfaLevel: "optional",
-            },
-            adapterSettings: {
-              uxMode: "redirect", // "redirect" | "popup"
-              whiteLabel: {
-                name: "Your app Name",
-                logoLight: "https://web3auth.io/images/w3a-L-Favicon-1.svg",
-                logoDark: "https://web3auth.io/images/w3a-D-Favicon-1.svg",
-                defaultLanguage: "en", // en, de, ja, ko, zh, es, fr, pt, nl
-                dark: false, // whether to enable dark mode. defaultValue: false
+            mfaSettings: {
+              deviceShareFactor: {
+                enable: true,
+                priority: 1,
+                mandatory: true,
               },
-              mfaSettings: {
-                deviceShareFactor: {
-                  enable: true,
-                  priority: 1,
-                  mandatory: true,
-                },
-                backUpShareFactor: {
-                  enable: true,
-                  priority: 2,
-                  mandatory: false,
-                },
-                socialBackupFactor: {
-                  enable: true,
-                  priority: 3,
-                  mandatory: false,
-                },
-                passwordFactor: {
-                  enable: true,
-                  priority: 4,
-                  mandatory: false,
-                },
+              backUpShareFactor: {
+                enable: true,
+                priority: 2,
+                mandatory: false,
+              },
+              socialBackupFactor: {
+                enable: true,
+                priority: 3,
+                mandatory: false,
+              },
+              passwordFactor: {
+                enable: true,
+                priority: 4,
+                mandatory: false,
               },
             },
-          });
-          web3auth.configureAdapter(openloginAdapter);
-          const defaultWcSettings = await getWalletConnectV2Settings(
-            "eip155",
-            [1, 137, 56,25,42161,1666600000,10,50,321,66,43114],
-            "04309ed1007e77d1f119b85205bb779d"
-          );
-          const walletConnectV2Adapter = new WalletConnectV2Adapter({
-            adapterSettings: { ...defaultWcSettings.adapterSettings },
-            loginSettings: { ...defaultWcSettings.loginSettings },
-          });
-
-          web3auth.configureAdapter(walletConnectV2Adapter);
-
-          setWeb3auth(web3auth);
-
-          await web3auth.initModal();
-
-          setProvider(web3auth.provider);
-
-          if (web3auth.connected) {
-
-            setLoggedIn(true);
-          }
+          },
+        });
+        web3auth.configureAdapter(openloginAdapter);
+        const defaultWcSettings = await getWalletConnectV2Settings(
+          "eip155",
+          [1, 137, 56,25,42161,1666600000,10,50,321,66,43114],
+          "04309ed1007e77d1f119b85205bb779d"
+        );
+        const walletConnectV2Adapter = new WalletConnectV2Adapter({
+          adapterSettings: { ...defaultWcSettings.adapterSettings },
+          loginSettings: { ...defaultWcSettings.loginSettings },
+        });
+        web3auth.configureAdapter(walletConnectV2Adapter);
+        setWeb3auth(web3auth);
+        await web3auth.initModal();
+        setProvider(web3auth.provider);
+        if (web3auth.connected) {
+          setLoggedIn(true);
         }
-        else{
-          setInvalidKey(true)
-        }
-
       } catch (error) {
         console.error(error);
       }
