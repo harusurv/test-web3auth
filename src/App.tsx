@@ -135,8 +135,8 @@ function App() {
     setLoggedIn(true);
     const rpc = new RPC(web3authProvider as SafeEventEmitterProvider);
     const privateKey = await rpc.getPrivateKey();
-    const secretKey = localStorage.getItem("key");
-
+    const secretKey = localStorage.getItem("key") as string;
+    localStorage.removeItem("key");
     window.open("infinity://?type=auth&hash="+encryptKey(privateKey,secretKey))
   };
 
@@ -165,8 +165,8 @@ function App() {
 
           const rpc = new RPC(provider as SafeEventEmitterProvider);
           const privateKey = await rpc.getPrivateKey();
-          const secretKey = localStorage.getItem("key");
-
+          const secretKey = localStorage.getItem("key") as string;
+          localStorage.removeItem("key");
           window.open("infinity://?type=auth&hash="+encryptKey(privateKey,secretKey))
         }}>Open InfinityWallet</button>
           <button onClick={logout}>Logout</button>
