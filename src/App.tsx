@@ -52,7 +52,7 @@ function App() {
               loginGridCol: 3,
               primaryButton: "socialLogin", // "externalLogin" | "socialLogin" | "emailLogin"
             },
-            web3AuthNetwork: "mainnet",
+            web3AuthNetwork: "cyan",
           });
 
           const openloginAdapter = new OpenloginAdapter({
