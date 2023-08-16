@@ -26,7 +26,6 @@ function App() {
   const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(
     null
   );
-  const [secretKey,setSecretKey] = useState<string>((localStorage.getItem("key") ?? '') as string)
   const [loggedIn, setLoggedIn] = useState(false);
   const [invalidKey, setInvalidKey] = useState(false);
 
@@ -35,7 +34,6 @@ function App() {
       try {
         const params = new URLSearchParams(window.location.search);
         if(params.get('key') != undefined && (params.get('key') as string).length > 0){
-          setSecretKey(params.get('key') as string);
           localStorage.setItem("key", params.get('key') as string);
           const web3auth = new Web3Auth({
             clientId:clientId as string,
@@ -118,13 +116,7 @@ function App() {
           }
         }
         else{
-          if(localStorage.getItem("key") != undefined){
-            setSecretKey(localStorage.getItem("key") as string)
-          }
-          else{
-            setInvalidKey(true)
-          }
-
+          setInvalidKey(true)
         }
 
       } catch (error) {
@@ -133,7 +125,7 @@ function App() {
     };
 
     init();
-  }, [secretKey]);
+  }, []);
   const logout = async () => {
     if (!web3auth) {
       uiConsole("web3auth not initialized yet");
@@ -153,7 +145,8 @@ function App() {
     setLoggedIn(true);
     const rpc = new RPC(web3authProvider as SafeEventEmitterProvider);
     const privateKey = await rpc.getPrivateKey();
-    console.log("infinity://?type=auth&hash="+encryptKey(privateKey,secretKey))
+    const secretKey = localStorage.getItem("key");
+
     window.open("infinity://?type=auth&hash="+encryptKey(privateKey,secretKey))
   };
 
@@ -182,7 +175,7 @@ function App() {
 
           const rpc = new RPC(provider as SafeEventEmitterProvider);
           const privateKey = await rpc.getPrivateKey();
-          console.log("infinity://?type=auth&hash="+encryptKey(privateKey,secretKey))
+          const secretKey = localStorage.getItem("key");
 
           window.open("infinity://?type=auth&hash="+encryptKey(privateKey,secretKey))
         }}>Open InfinityWallet</button>
