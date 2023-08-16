@@ -4,7 +4,7 @@ module.exports = function override(config) {
   const fallback = config.resolve.fallback || {};
   Object.assign(fallback, {
     crypto: require.resolve("crypto-browserify"),
-    stream: false,
+    stream: require.resolve("readable-stream"),
     assert: false,
     http: false,
     https: false,
