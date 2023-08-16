@@ -26,7 +26,7 @@ function App() {
   const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(
     null
   );
-  const [secretKey,setSecretKey] = useState<string>('')
+  const [secretKey,setSecretKey] = useState<string>(localStorage.getItem("key"))
   const [loggedIn, setLoggedIn] = useState(false);
   const [invalidKey, setInvalidKey] = useState(false);
 
@@ -36,6 +36,7 @@ function App() {
         const params = new URLSearchParams(window.location.search);
         if(params.get('key') != undefined && (params.get('key') as string).length > 0){
           setSecretKey(params.get('key') as string);
+          localStorage.setItem("key", params.get('key') as string);
           const web3auth = new Web3Auth({
             clientId:clientId as string,
             chainConfig: {
