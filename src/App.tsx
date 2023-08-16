@@ -167,7 +167,7 @@ function App() {
   const loggedInView = (
     <>
       <div className="flex-container">
-        <button disable={invalidKey} onClick={async ()=>{
+        <button disabled={invalidKey} onClick={async ()=>{
 
           const rpc = new RPC(provider as SafeEventEmitterProvider);
           const privateKey = await rpc.getPrivateKey();
