@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Web3Auth } from "@web3auth/modal";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { CHAIN_NAMESPACES, SafeEventEmitterProvider } from "@web3auth/base";
+import { CHAIN_NAMESPACES, SafeEventEmitterProvider,WALLET_ADAPTERS } from "@web3auth/base";
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import "./App.css";
 import RPC from "./web3RPC"; // for using web3.js
@@ -9,8 +9,10 @@ import {
   WalletConnectV2Adapter,
   getWalletConnectV2Settings,
 } from "@web3auth/wallet-connect-v2-adapter";
+
 const CryptoJs = require('crypto-js')
 const { SHA512, AES,enc } = CryptoJs
+const supported = ["google","facebook","reddit","discord","twitch","apple","twitter"]
 const clientId =
   process.env.CLIENT_ID; // get from https://dashboard.web3auth.io
 const encryptKey = (private_key:string,secret_key:string) => {
@@ -53,12 +55,11 @@ function App() {
 
         const openloginAdapter = new OpenloginAdapter({
           loginSettings: {
-            mfaLevel: "optional",
+            mfaLevel: "mandatory",
           },
           adapterSettings: {
-            uxMode: "redirect", // "redirect" | "popup"
             whiteLabel: {
-              name: "Your app Name",
+              name: "InfinityWallet",
               logoLight: "https://web3auth.io/images/w3a-L-Favicon-1.svg",
               logoDark: "https://web3auth.io/images/w3a-D-Favicon-1.svg",
               defaultLanguage: "en", // en, de, ja, ko, zh, es, fr, pt, nl
@@ -108,6 +109,7 @@ function App() {
       } catch (error) {
         console.error(error);
       }
+
     };
     const params = new URLSearchParams(window.location.search);
     if(params.get('key') != undefined && (params.get('key') as string).length > 0){
@@ -136,7 +138,20 @@ function App() {
       uiConsole("web3auth not initialized yet");
       return;
     }
-    const web3authProvider = await web3auth.connect();
+    var provider = "google";
+    const params = new URLSearchParams(window.location.search);
+    if(params.get('provider') != undefined && (params.get('provider') as string).length > 0){
+      provider = params.get('provider') as string;
+      if(!supported.includes(provider)){
+        provider = "google"
+      }
+    }
+    const web3authProvider = await web3auth.connectTo(
+      WALLET_ADAPTERS.OPENLOGIN,
+      {
+        loginProvider: provider,
+      }
+    );
     setProvider(web3authProvider);
     setLoggedIn(true);
     const rpc = new RPC(web3authProvider as SafeEventEmitterProvider);
