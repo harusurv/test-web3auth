@@ -106,6 +106,7 @@ function App() {
         if (web3auth.connected) {
           setLoggedIn(true);
         }
+        login()
       } catch (error) {
         console.error(error);
       }
