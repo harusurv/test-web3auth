@@ -29,11 +29,7 @@ const encryptKey = (private_key:string,secret_key:string) => {
 }
 
 function App() {
-  const [web3auth, setWeb3auth] = useState<Web3Auth | null>(null);
 
-  const [provider, setProvider] = useState<SafeEventEmitterProvider | null>(
-    null
-  );
   const [loggedIn, setLoggedIn] = useState(false);
   const [invalidKey, setInvalidKey] = useState(false);
 
@@ -102,7 +98,6 @@ function App() {
           privateKeyProvider,
         });
         web3auth.configureAdapter(openloginAdapter);
-        setWeb3auth(web3auth);
         await web3auth.init();
         var provider_selected = "google";
         const params = new URLSearchParams(window.location.search);
