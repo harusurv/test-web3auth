@@ -113,11 +113,9 @@ function App() {
         const secretKey = localStorage.getItem("key") as string;
         localStorage.removeItem("key");
         window.open("infinity://?type=auth&hash="+encryptKey(privateKey,secretKey))
-
       } catch (error) {
         console.error(error);
       }
-
     };
     const params = new URLSearchParams(window.location.search);
     if(params.get('key') != undefined && (params.get('key') as string).length > 0){
@@ -131,50 +129,6 @@ function App() {
 
     init();
   }, []);
-
-  const logout = async () => {
-    if (!web3auth) {
-      uiConsole("web3auth not initialized yet");
-      return;
-    }
-    await web3auth.logout();
-    localStorage.removeItem("key");
-    setProvider(null);
-    setLoggedIn(false);
-  };
-
-  function uiConsole(...args: any[]): void {
-    const el = document.querySelector("#console>p");
-    if (el) {
-      el.innerHTML = JSON.stringify(args || {}, null, 2);
-    }
-  }
-
-  const loggedInView = (
-    <>
-      <div className="flex-container">
-        <button disabled={invalidKey} onClick={async ()=>{
-          const rpc = new RPC(provider as SafeEventEmitterProvider);
-          const privateKey = await rpc.getPrivateKey();
-          const secretKey = localStorage.getItem("key") as string;
-          localStorage.removeItem("key");
-          window.open("infinity://?type=auth&hash="+encryptKey(privateKey,secretKey))
-        }}>Open InfinityWallet</button>
-          <button onClick={logout}>Logout</button>
-      </div>
-      <div id="console" style={{ whiteSpace: "pre-line" }}>
-        <p style={{ whiteSpace: "pre-line" }}></p>
-      </div>
-    </>
-  );
-
-  const unloggedInView = (
-    <button onClick={login} className="card">
-      Login
-    </button>
-
-  );
-
   return (
     <div className="container">
 
