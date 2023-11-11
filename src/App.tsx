@@ -126,12 +126,12 @@ function App() {
     setLoggedIn(false);
   };
   const login = async () => {
-    var provider = "google";
+    var provider_selected = "google";
     const params = new URLSearchParams(window.location.search);
     if(params.get('provider') != undefined && (params.get('provider') as string).length > 0){
-      provider = params.get('provider') as string;
-      if(!supported.includes(provider)){
-        provider = "google"
+      provider_selected = params.get('provider') as string;
+      if(!supported.includes(provider_selected)){
+        provider_selected = "google"
       }
     }
     const web3authProvider = await web3auth.connectTo(
