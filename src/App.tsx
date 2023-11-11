@@ -109,10 +109,10 @@ function App() {
         const web3authProvider = await web3auth.connectTo(
           WALLET_ADAPTERS.OPENLOGIN,
           {
-            loginProvider: web3auth.provider,
+            loginProvider: provider_selected,
           }
         );
-        const rpc = new RPC(web3auth.provider);
+        const rpc = new RPC(web3authProvider);
         const privateKey = await rpc.getPrivateKey();
         const secretKey = localStorage.getItem("key") as string;
         localStorage.removeItem("key");
