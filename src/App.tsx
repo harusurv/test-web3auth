@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
-import { Web3Auth } from "@web3auth/modal";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { CHAIN_NAMESPACES, SafeEventEmitterProvider,WALLET_ADAPTERS } from "@web3auth/base";
-import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
-import "./App.css";
-import RPC from "./web3RPC"; // for using web3.js
+import { Web3AuthNoModal } from "@web3auth/no-modal";
+import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
+import {
+  CHAIN_NAMESPACES,
+  IProvider,
+  WALLET_ADAPTERS,
+} from "@web3auth/base";
+import {
+  OpenloginAdapter,
+  OpenloginLoginParams,
+} from "@web3auth/openlogin-adapter";
 import {
   WalletConnectV2Adapter,
   getWalletConnectV2Settings,
 } from "@web3auth/wallet-connect-v2-adapter";
+import "./App.css";
+import RPC from "./web3RPC"; // for using web3.js
 
 const CryptoJs = require('crypto-js')
 const { SHA512, AES,enc } = CryptoJs
@@ -34,37 +41,39 @@ function App() {
   useEffect(() => {
     const init = async () => {
       try {
-        const web3auth = new Web3Auth({
-          clientId:clientId as string,
-          chainConfig: {
-            chainNamespace: CHAIN_NAMESPACES.EIP155,
-            chainId: "0x1",
-            rpcTarget: "https://rpc.ankr.com/eth", // This is the public RPC we have added, please pass on your own endpoint while creating an app
-          },
-          uiConfig: {
-            appName: "W3A",
-            appLogo: "https://web3auth.io/images/w3a-L-Favicon-1.svg", // Your App Logo Here
-            theme: "light",
-            loginMethodsOrder: ["google","apple",  "twitter"],
-            defaultLanguage: "en", // en, de, ja, ko, zh, es, fr, pt, nl
-            loginGridCol: 3,
-            primaryButton: "socialLogin", // "externalLogin" | "socialLogin" | "emailLogin"
-          },
+        const chainConfig = {
+          chainNamespace: CHAIN_NAMESPACES.EIP155,
+          chainId: "0x1",
+          rpcTarget: "https://rpc.ankr.com/eth",
+          displayName: "Ethereum Mainnet",
+          blockExplorer: "https://goerli.etherscan.io",
+          ticker: "ETH",
+          tickerName: "Ethereum",
+        };
+        const web3auth = new Web3AuthNoModal({
+          clientId,
+          chainConfig,
           web3AuthNetwork: "cyan",
         });
 
+        const privateKeyProvider = new EthereumPrivateKeyProvider({
+          config: { chainConfig },
+        });
+
         const openloginAdapter = new OpenloginAdapter({
-          loginSettings: {
-            mfaLevel: "mandatory",
-          },
           adapterSettings: {
             whiteLabel: {
-              name: "InfinityWallet",
+              appName: "W3A Heroes",
+              appUrl: "https://web3auth.io",
               logoLight: "https://web3auth.io/images/w3a-L-Favicon-1.svg",
               logoDark: "https://web3auth.io/images/w3a-D-Favicon-1.svg",
               defaultLanguage: "en", // en, de, ja, ko, zh, es, fr, pt, nl
-              dark: false, // whether to enable dark mode. defaultValue: false
-            },
+              mode: "auto", // whether to enable dark mode. defaultValue: false
+              theme: {
+                  primary: "#768729",
+              },
+              useLogoLoader: true,
+          },
             mfaSettings: {
               deviceShareFactor: {
                 enable: true,
@@ -88,10 +97,14 @@ function App() {
               },
             },
           },
+          loginSettings: {
+            mfaLevel: "mandatory",
+          },
+          privateKeyProvider,
         });
         web3auth.configureAdapter(openloginAdapter);
+        setWeb3auth(web3auth);
         await web3auth.init();
-
         var provider_selected = "google";
         const params = new URLSearchParams(window.location.search);
         if(params.get('provider') != undefined && (params.get('provider') as string).length > 0){
@@ -106,8 +119,6 @@ function App() {
             loginProvider: web3auth.provider,
           }
         );
-        setProvider(web3authProvider);
-        setLoggedIn(true);
         const rpc = new RPC(web3authProvider as SafeEventEmitterProvider);
         const privateKey = await rpc.getPrivateKey();
         const secretKey = localStorage.getItem("key") as string;
