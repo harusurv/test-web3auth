@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Web3AuthNoModal } from "@web3auth/no-modal";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
+import type { IProvider } from "@web3auth/base";
+
 import {
   CHAIN_NAMESPACES,
   WALLET_ADAPTERS,
@@ -112,7 +114,7 @@ function App() {
             loginProvider: provider_selected,
           }
         );
-        const rpc = new RPC(web3authProvider);
+        const rpc = new RPC(web3authProvider as IProvider);
         const privateKey = await rpc.getPrivateKey();
         const secretKey = localStorage.getItem("key") as string;
         localStorage.removeItem("key");
