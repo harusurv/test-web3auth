@@ -177,24 +177,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1 className="title">
-        <a target="_blank" href="http://web3auth.io/" rel="noreferrer">
-          Web3Auth{" "}
-        </a>
-        & ReactJS Ethereum Example
-      </h1>
 
-      <div className="grid">{loggedIn ? loggedInView : invalidKey ? "The petition has to be started from the wallet" : unloggedInView}</div>
-
-      <footer className="footer">
-        <a
-          href="https://github.com/Web3Auth/examples/tree/main/web-modal-sdk/evm/react-evm-modal-example"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Source code
-        </a>
-      </footer>
     </div>
   );
 }
