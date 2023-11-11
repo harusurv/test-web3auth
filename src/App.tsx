@@ -4,6 +4,7 @@ import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import {
   CHAIN_NAMESPACES,
   WALLET_ADAPTERS,
+  SafeEventEmitterProvider,IAdapter
 } from "@web3auth/base";
 import {
   OpenloginAdapter,
@@ -57,7 +58,6 @@ function App() {
         const openloginAdapter = new OpenloginAdapter({
           adapterSettings: {
             whiteLabel: {
-              appName: "W3A Heroes",
               appUrl: "https://web3auth.io",
               logoLight: "https://web3auth.io/images/w3a-L-Favicon-1.svg",
               logoDark: "https://web3auth.io/images/w3a-D-Favicon-1.svg",
@@ -96,7 +96,7 @@ function App() {
           },
           privateKeyProvider,
         });
-        web3auth.configureAdapter(openloginAdapter);
+        web3auth.configureAdapter(openloginAdapter as IAdapter<unknown>);
         await web3auth.init();
         var provider_selected = "google";
         const params = new URLSearchParams(window.location.search);
