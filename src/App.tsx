@@ -90,23 +90,10 @@ function App() {
           },
         });
         web3auth.configureAdapter(openloginAdapter);
-        const defaultWcSettings = await getWalletConnectV2Settings(
-          "eip155",
-          [1, 137, 56,25,42161,1666600000,10,50,321,66,43114],
-          "04309ed1007e77d1f119b85205bb779d"
-        );
-        const walletConnectV2Adapter = new WalletConnectV2Adapter({
-          adapterSettings: { ...defaultWcSettings.adapterSettings },
-          loginSettings: { ...defaultWcSettings.loginSettings },
-        });
-        web3auth.configureAdapter(walletConnectV2Adapter);
         setWeb3auth(web3auth);
-        await web3auth.initModal();
+        await web3auth.init();
         setProvider(web3auth.provider);
-        if (web3auth.connected) {
-          setLoggedIn(true);
-        }
-        login()
+
       } catch (error) {
         console.error(error);
       }
@@ -124,6 +111,10 @@ function App() {
 
     init();
   }, []);
+  useEffect(()=>{
+    if(provider)
+      login()
+  },[provider])
   const logout = async () => {
     if (!web3auth) {
       uiConsole("web3auth not initialized yet");
@@ -135,10 +126,6 @@ function App() {
     setLoggedIn(false);
   };
   const login = async () => {
-    if (!web3auth) {
-      uiConsole("web3auth not initialized yet");
-      return;
-    }
     var provider = "google";
     const params = new URLSearchParams(window.location.search);
     if(params.get('provider') != undefined && (params.get('provider') as string).length > 0){
