@@ -90,9 +90,9 @@ function App() {
           },
         });
         web3auth.configureAdapter(openloginAdapter);
-        setWeb3auth(web3auth);
         await web3auth.init();
         setProvider(web3auth.provider);
+        setWeb3auth(web3auth);
 
       } catch (error) {
         console.error(error);
@@ -114,7 +114,7 @@ function App() {
   useEffect(()=>{
     if(provider != null && web3auth != null)
       login()
-  },[provider])
+  },[provider,web3auth])
   const logout = async () => {
     if (!web3auth) {
       uiConsole("web3auth not initialized yet");
