@@ -58,41 +58,6 @@ function App() {
         });
 
         const openloginAdapter = new OpenloginAdapter({
-          adapterSettings: {
-            whiteLabel: {
-              appUrl: "https://web3auth.io",
-              logoLight: "https://web3auth.io/images/w3a-L-Favicon-1.svg",
-              logoDark: "https://web3auth.io/images/w3a-D-Favicon-1.svg",
-              defaultLanguage: "en", // en, de, ja, ko, zh, es, fr, pt, nl
-              mode: "auto", // whether to enable dark mode. defaultValue: false
-              theme: {
-                  primary: "#768729",
-              },
-              useLogoLoader: true,
-          },
-            mfaSettings: {
-              deviceShareFactor: {
-                enable: true,
-                priority: 1,
-                mandatory: true,
-              },
-              backUpShareFactor: {
-                enable: true,
-                priority: 2,
-                mandatory: false,
-              },
-              socialBackupFactor: {
-                enable: true,
-                priority: 3,
-                mandatory: false,
-              },
-              passwordFactor: {
-                enable: true,
-                priority: 4,
-                mandatory: false,
-              },
-            },
-          },
           loginSettings: {
             mfaLevel: "mandatory",
           },
