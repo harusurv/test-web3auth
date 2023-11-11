@@ -112,7 +112,7 @@ function App() {
     init();
   }, []);
   useEffect(()=>{
-    if(provider)
+    if(provider != null && web3auth != null)
       login()
   },[provider])
   const logout = async () => {
