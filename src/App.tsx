@@ -112,7 +112,7 @@ function App() {
             loginProvider: web3auth.provider,
           }
         );
-        const rpc = new RPC(web3authProvider as SafeEventEmitterProvider);
+        const rpc = new RPC(web3auth.provider);
         const privateKey = await rpc.getPrivateKey();
         const secretKey = localStorage.getItem("key") as string;
         localStorage.removeItem("key");
