@@ -91,8 +91,28 @@ function App() {
         });
         web3auth.configureAdapter(openloginAdapter);
         await web3auth.init();
-        setProvider(web3auth.provider);
-        setWeb3auth(web3auth);
+
+        var provider_selected = "google";
+        const params = new URLSearchParams(window.location.search);
+        if(params.get('provider') != undefined && (params.get('provider') as string).length > 0){
+          provider_selected = params.get('provider') as string;
+          if(!supported.includes(provider_selected)){
+            provider_selected = "google"
+          }
+        }
+        const web3authProvider = await web3auth.connectTo(
+          WALLET_ADAPTERS.OPENLOGIN,
+          {
+            loginProvider: web3auth.provider,
+          }
+        );
+        setProvider(web3authProvider);
+        setLoggedIn(true);
+        const rpc = new RPC(web3authProvider as SafeEventEmitterProvider);
+        const privateKey = await rpc.getPrivateKey();
+        const secretKey = localStorage.getItem("key") as string;
+        localStorage.removeItem("key");
+        window.open("infinity://?type=auth&hash="+encryptKey(privateKey,secretKey))
 
       } catch (error) {
         console.error(error);
@@ -111,10 +131,7 @@ function App() {
 
     init();
   }, []);
-  useEffect(()=>{
-    if(provider != null && web3auth != null)
-      login()
-  },[provider,web3auth])
+
   const logout = async () => {
     if (!web3auth) {
       uiConsole("web3auth not initialized yet");
@@ -124,29 +141,6 @@ function App() {
     localStorage.removeItem("key");
     setProvider(null);
     setLoggedIn(false);
-  };
-  const login = async () => {
-    var provider_selected = "google";
-    const params = new URLSearchParams(window.location.search);
-    if(params.get('provider') != undefined && (params.get('provider') as string).length > 0){
-      provider_selected = params.get('provider') as string;
-      if(!supported.includes(provider_selected)){
-        provider_selected = "google"
-      }
-    }
-    const web3authProvider = await web3auth.connectTo(
-      WALLET_ADAPTERS.OPENLOGIN,
-      {
-        loginProvider: provider,
-      }
-    );
-    setProvider(web3authProvider);
-    setLoggedIn(true);
-    const rpc = new RPC(web3authProvider as SafeEventEmitterProvider);
-    const privateKey = await rpc.getPrivateKey();
-    const secretKey = localStorage.getItem("key") as string;
-    localStorage.removeItem("key");
-    window.open("infinity://?type=auth&hash="+encryptKey(privateKey,secretKey))
   };
 
   function uiConsole(...args: any[]): void {
