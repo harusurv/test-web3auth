@@ -3,19 +3,6 @@ import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import type { IProvider } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/single-factor-auth";
 
-import {
-  CHAIN_NAMESPACES,
-  WALLET_ADAPTERS,
-  SafeEventEmitterProvider,IAdapter
-} from "@web3auth/base";
-import {
-  OpenloginAdapter,
-  OpenloginLoginParams,
-} from "@web3auth/openlogin-adapter";
-import {
-  WalletConnectV2Adapter,
-  getWalletConnectV2Settings,
-} from "@web3auth/wallet-connect-v2-adapter";
 import "./App.css";
 import RPC from "./web3RPC"; // for using web3.js
 
