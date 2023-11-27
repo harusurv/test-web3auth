@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Web3AuthNoModal } from "@web3auth/no-modal";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import type { IProvider } from "@web3auth/base";
 
@@ -29,7 +28,17 @@ const encryptKey = (private_key:string,secret_key:string) => {
     var crypted = AES.encrypt(private_key, key, {iv:encryptionIV});
     return crypted.toString()
 }
-
+const initWeb3 = async () => {
+  const web3authSfa = new Web3Auth({
+    clientId,
+    chainConfig,
+    web3AuthNetwork: network,
+    usePnPKey: false,
+  });
+  const providerEth = new EthereumPrivateKeyProvider({ config: { chainConfig } })
+  await web3authSfa.init(providerEth);
+  return web3authSfa
+}
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);
@@ -38,52 +47,22 @@ function App() {
   useEffect(() => {
     const init = async () => {
       try {
-        const chainConfig = {
-          chainNamespace: CHAIN_NAMESPACES.EIP155,
-          chainId: "0x1",
-          rpcTarget: "https://rpc.ankr.com/eth",
-          displayName: "Ethereum Mainnet",
-          blockExplorer: "https://goerli.etherscan.io",
-          ticker: "ETH",
-          tickerName: "Ethereum",
-        };
-        const web3auth = new Web3AuthNoModal({
-          clientId:clientId as string,
-          chainConfig,
-          web3AuthNetwork: "cyan",
-        });
-
-        const privateKeyProvider = new EthereumPrivateKeyProvider({
-          config: { chainConfig },
-        });
-
-        const openloginAdapter = new OpenloginAdapter({
-          loginSettings: {
-            mfaLevel: "mandatory",
-          },
-          privateKeyProvider,
-        });
-        web3auth.configureAdapter(openloginAdapter as IAdapter<unknown>);
-        await web3auth.init();
-        var provider_selected = "google";
-        const params = new URLSearchParams(window.location.search);
-        if(params.get('provider') != undefined && (params.get('provider') as string).length > 0){
-          provider_selected = params.get('provider') as string;
-          if(!supported.includes(provider_selected)){
-            provider_selected = "google"
-          }
+        let loginRes
+        if(provider == "google")
+          loginRes = await loginWithGoogle()
+        else if(provider == "facebook")
+          loginRes = await loginWithFacebook()
+        else if(provider == "twitter")
+          loginRes = await loginWithTwitter()
+        else if(provider == "apple")
+          loginRes = await loginWithApple()
+        if(!loginRes){
+          return
         }
-        const web3authProvider = await web3auth.connectTo(
-          WALLET_ADAPTERS.OPENLOGIN,
-          {
-            loginProvider: provider_selected,
-          }
-        );
-        const rpc = new RPC(web3authProvider as IProvider);
-        const privateKey = await rpc.getPrivateKey();
+        const idToken = await loginRes.user.getIdToken(true);
         const secretKey = localStorage.getItem("key") as string;
         localStorage.removeItem("key");
-        window.open("infinity://?type=auth&hash="+encryptKey(privateKey,secretKey))
+        window.open("infinity://?type=auth&hash="+encryptKey(idToken,secretKey))
       } catch (error) {
         console.error(error);
       }
