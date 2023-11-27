@@ -1,4 +1,4 @@
-import {auth} from '../firebase.ts'
+import {auth} from '../firebase.js'
 import { GoogleAuthProvider,signInWithRedirect,getRedirectResult } from "firebase/auth";
 var provider = new GoogleAuthProvider();
 
