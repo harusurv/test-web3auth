@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import { Web3Auth } from "@web3auth/single-factor-auth";
+import {clientId,network,chainConfig,verifier} from './config'
 import {loginWithGoogle,loginWithApple,loginWithTwitter,loginWithFacebook} from './providers'
 import "./App.css";
 import RPC from "./web3RPC"; // for using web3.js
