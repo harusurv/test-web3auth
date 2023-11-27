@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
-import type { IProvider } from "@web3auth/base";
 import { Web3Auth } from "@web3auth/single-factor-auth";
 
 import "./App.css";
