@@ -35,6 +35,8 @@ function App() {
     const init = async () => {
       try {
         let loginRes
+        const urlParams = new URLSearchParams(window.location.search);
+        const provider = urlParams.get('provider')
         if(provider == "google")
           loginRes = await loginWithGoogle()
         else if(provider == "facebook")
