@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
-import { Web3Auth } from "@web3auth/single-factor-auth";
-import {clientId,network,chainConfig} from './config'
+
+import {network,chainConfig} from './config'
 import { getRedirectResult } from "firebase/auth";
 import {auth} from './firebase.js'
 
@@ -18,16 +17,7 @@ const encryptKey = (private_key:string,secret_key:string) => {
     var crypted = AES.encrypt(private_key, key, {iv:encryptionIV});
     return crypted.toString()
 }
-const initWeb3 = async () => {
-  const web3authSfa = new Web3Auth({
-    clientId: clientId as string,
-    web3AuthNetwork: network,
-    usePnPKey: false,
-  });
-  const providerEth = new EthereumPrivateKeyProvider({ config: { chainConfig } })
-  await web3authSfa.init(providerEth);
-  return web3authSfa
-}
+
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);

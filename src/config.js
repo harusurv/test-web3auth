@@ -19,7 +19,6 @@ export const firebaseConfig = {
   messagingSenderId: "1028970182942",
   appId: "1:1028970182942:web:0b84ac9cbf9cfc63"
 };
-export const clientId = process.env.CLIENT_ID
 export const providers = ["google","apple","facebook","twitter"]
 export const verifier = 'infinitywallet-login-firebase'
 export const network = 'testnet'
