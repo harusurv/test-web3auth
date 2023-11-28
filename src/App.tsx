@@ -71,7 +71,7 @@ function App() {
         setInvalidKey(true)
       }
     }
-
+    console.log("init")
     init();
   }, []);
   return (
