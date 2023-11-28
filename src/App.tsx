@@ -31,8 +31,7 @@ const initWeb3 = async () => {
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);
-  const [invalidKey, setInvalidKey] = useState(false);
-
+  const [urlGo,setUrlGo] = useState('')
   useEffect(() => {
     const init = async () => {
       try {
@@ -56,7 +55,10 @@ function App() {
           const idToken = (await loginRes?.user?.getIdToken(true)) as string;
           const secretKey = localStorage.getItem("key") as string;
           localStorage.removeItem("key");
-          window.open("infinity://?type=auth&hash="+encryptKey(idToken,secretKey))
+          const url = "infinity://?type=auth&hash="+encryptKey(idToken,secretKey)
+          setUrlGo(url)
+          window.open(url)
+          setLoggedIn(true)
         }
       } catch (error) {
         console.error(error);
@@ -71,11 +73,11 @@ function App() {
         setInvalidKey(true)
       }
     }
-    console.log("init")
     init();
   }, []);
   return (
     <div className="container">
+      {loggedIn ? <a href={urlGo}>Open in infinitywallet</a> : null}
 
     </div>
   );
