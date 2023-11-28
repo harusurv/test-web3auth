@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import { Web3Auth } from "@web3auth/single-factor-auth";
 import {clientId,network,chainConfig} from './config'
+import { getRedirectResult } from "firebase/auth";
+import {auth} from './firebase.js'
+
 import {loginWithGoogle,loginWithApple,loginWithTwitter,loginWithFacebook} from './providers'
 import "./App.css";
 import RPC from "./web3RPC"; // for using web3.js
@@ -33,27 +36,22 @@ function App() {
   useEffect(() => {
     const init = async () => {
       try {
-        let loginRes
         const urlParams = new URLSearchParams(window.location.search);
         const provider = urlParams.get('provider') as string
         const key = urlParams.get('key') as string
-
         if(key && provider){
           localStorage.setItem('key',key);
           if(provider == "google")
-            loginRes = await loginWithGoogle()
+            await loginWithGoogle()
           else if(provider == "facebook")
-            loginRes = await loginWithFacebook()
+            await loginWithFacebook()
           else if(provider == "twitter")
-            loginRes = await loginWithTwitter()
+            await loginWithTwitter()
           else if(provider == "apple")
-            loginRes = await loginWithApple()
-          console.log(loginRes)
-          if(!loginRes){
-            return
-          }
+            await loginWithApple()
         }
         else{
+          const loginRes = await getRedirectResult(auth)
           const idToken = await loginRes.user.getIdToken(true);
           const secretKey = localStorage.getItem("key") as string;
           localStorage.removeItem("key");
