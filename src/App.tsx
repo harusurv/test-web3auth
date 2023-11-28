@@ -15,11 +15,13 @@ function App() {
         const urlParams = new URLSearchParams(window.location.search);
         const secretKey = urlParams.get('key') as string
         const loginRes = await getRedirectResult(auth)
-        const idToken = (await loginRes?.user?.getIdToken(true)) as string;
-        const url = "infinity://?type=auth&hash="+encryptKey(idToken,secretKey)
-        setUrlGo(url)
-        window.open(url)
-        setLoggedIn(true)
+        if(secretKey && loginRes){
+          const idToken = (await loginRes?.user?.getIdToken(true)) as string;
+          const url = "infinity://?type=auth&hash="+encryptKey(idToken,secretKey)
+          setUrlGo(url)
+          window.open(url)
+          setLoggedIn(true)
+        }
       } catch (error) {
         console.error(error);
       }
