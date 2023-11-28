@@ -17,15 +17,15 @@ function App() {
         const provider = urlParams.get('provider') as string
         const key = urlParams.get('key') as string
         const loginRes = await getRedirectResult(auth)
-        if(key && provider && loginRes == null){
+        if(key && provider && loginRes === null){
           localStorage.setItem('key',key);
-          if(provider == "google")
+          if(provider === "google")
             loginWithGoogle()
-          else if(provider == "facebook")
+          else if(provider === "facebook")
             loginWithFacebook()
-          else if(provider == "twitter")
+          else if(provider === "twitter")
             loginWithTwitter()
-          else if(provider == "apple")
+          else if(provider === "apple")
             loginWithApple()
         }
         else{
