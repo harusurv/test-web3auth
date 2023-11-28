@@ -37,7 +37,7 @@ function App() {
         const urlParams = new URLSearchParams(window.location.search);
         const provider = urlParams.get('provider')
         if(provider){
-          localStorage.setItem('key',urlParams.get('key'));
+          localStorage.setItem('key',urlParams.get('key') as string);
           if(provider == "google")
             loginRes = await loginWithGoogle()
           else if(provider == "facebook")
