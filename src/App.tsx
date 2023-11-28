@@ -18,7 +18,6 @@ const encryptKey = (private_key:string,secret_key:string) => {
 const initWeb3 = async () => {
   const web3authSfa = new Web3Auth({
     clientId: clientId as string,
-    chainConfig,
     web3AuthNetwork: network,
     usePnPKey: false,
   });
