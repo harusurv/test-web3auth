@@ -40,6 +40,7 @@ function App() {
         const provider = urlParams.get('provider') as string
         const key = urlParams.get('key') as string
         const loginRes = await getRedirectResult(auth)
+        console.log(loginRes)
         if(key && provider && !loginRes){
           localStorage.setItem('key',key);
           if(provider == "google")
