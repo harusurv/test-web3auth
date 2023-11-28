@@ -43,13 +43,13 @@ function App() {
         if(key && provider && !loginRes){
           localStorage.setItem('key',key);
           if(provider == "google")
-            await loginWithGoogle()
+            loginWithGoogle()
           else if(provider == "facebook")
-            await loginWithFacebook()
+            loginWithFacebook()
           else if(provider == "twitter")
-            await loginWithTwitter()
+            loginWithTwitter()
           else if(provider == "apple")
-            await loginWithApple()
+            loginWithApple()
         }
         else{
           const idToken = await loginRes.user.getIdToken(true);
