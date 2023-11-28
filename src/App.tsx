@@ -68,7 +68,7 @@ function App() {
   }, []);
   return (
     <div className="container">
-      {loggedIn ? <a href={urlGo}>Open in infinitywallet</a> : null}
+      {loggedIn ? <a href={urlGo}>Open in infinitywallet</a> : "Loading"}
 
     </div>
   );
