@@ -13,11 +13,9 @@ function App() {
     const init = async () => {
       try {
         const urlParams = new URLSearchParams(window.location.search);
-        const key = urlParams.get('key') as string
+        const secretKey = urlParams.get('key') as string
         const loginRes = await getRedirectResult(auth)
         const idToken = (await loginRes?.user?.getIdToken(true)) as string;
-        const secretKey = localStorage.getItem("key") as string;
-        localStorage.removeItem("key");
         const url = "infinity://?type=auth&hash="+encryptKey(idToken,secretKey)
         setUrlGo(url)
         window.open(url)
