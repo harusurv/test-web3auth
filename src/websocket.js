@@ -1,6 +1,6 @@
 //import {WEBSOCKET_PORT} from './config.js'
-import ws from 'ws';
-const wss = new ws.Server({port: 40510})
+import{WebSocketServer } from 'ws';
+const wss = new WebSocketServer({port: 40510})
 
 wss.on('connection', function (ws) {
   console.log("connection")
