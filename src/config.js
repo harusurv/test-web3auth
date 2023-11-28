@@ -7,4 +7,3 @@ export const firebaseConfig = {
   messagingSenderId: "1028970182942",
   appId: "1:1028970182942:web:0b84ac9cbf9cfc63"
 };
-export const WEBSOCKET_PORT = 40510
