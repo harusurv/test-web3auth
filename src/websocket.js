@@ -1,9 +1,11 @@
 import {WEBSOCKET_PORT} from './config.js'
 
+console.log("START WEBSOCKET")
 var WebSocketServer = require('ws').Server,
 wss = new WebSocketServer({port: WEBSOCKET_PORT})
 
 wss.on('connection', function (ws) {
+  console.log("connection")
   ws.on('message', function (message) {
     console.log('received: %s', message)
   })
