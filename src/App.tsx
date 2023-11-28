@@ -36,18 +36,22 @@ function App() {
         let loginRes
         const urlParams = new URLSearchParams(window.location.search);
         const provider = urlParams.get('provider')
-        if(provider == "google")
-          loginRes = await loginWithGoogle()
-        else if(provider == "facebook")
-          loginRes = await loginWithFacebook()
-        else if(provider == "twitter")
-          loginRes = await loginWithTwitter()
-        else if(provider == "apple")
-          loginRes = await loginWithApple()
-        console.log(loginRes)
-        if(!loginRes){
-          return
+        if(provider){
+          localStorage.setItem(urlParams.get('key'));
+          if(provider == "google")
+            loginRes = await loginWithGoogle()
+          else if(provider == "facebook")
+            loginRes = await loginWithFacebook()
+          else if(provider == "twitter")
+            loginRes = await loginWithTwitter()
+          else if(provider == "apple")
+            loginRes = await loginWithApple()
+          console.log(loginRes)
+          if(!loginRes){
+            return
+          }
         }
+
         const idToken = await loginRes.user.getIdToken(true);
         const secretKey = localStorage.getItem("key") as string;
         localStorage.removeItem("key");
