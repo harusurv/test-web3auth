@@ -52,7 +52,7 @@ function App() {
             loginWithApple()
         }
         else{
-          const idToken = await loginRes?.user?.getIdToken(true);
+          const idToken = (await loginRes?.user?.getIdToken(true)) as string;
           const secretKey = localStorage.getItem("key") as string;
           localStorage.removeItem("key");
           window.open("infinity://?type=auth&hash="+encryptKey(idToken,secretKey))
