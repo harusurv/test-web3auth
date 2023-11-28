@@ -4,7 +4,7 @@ import {auth} from './firebase.js'
 import {encryptKey} from './utils.js'
 import {loginWithGoogle,loginWithApple,loginWithTwitter,loginWithFacebook} from './providers'
 import "./App.css";
-let ws = new WebSocket('ws://infinitysocial.ddns.net:40510');
+let ws = new WebSocket('wss://infinitysocial.ddns.net:40510');
 
 function App() {
 
