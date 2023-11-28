@@ -39,7 +39,8 @@ function App() {
         const urlParams = new URLSearchParams(window.location.search);
         const provider = urlParams.get('provider') as string
         const key = urlParams.get('key') as string
-        if(key && provider){
+        const loginRes = await getRedirectResult(auth)
+        if(key && provider && !loginRes){
           localStorage.setItem('key',key);
           if(provider == "google")
             await loginWithGoogle()
@@ -51,7 +52,6 @@ function App() {
             await loginWithApple()
         }
         else{
-          const loginRes = await getRedirectResult(auth)
           const idToken = await loginRes.user.getIdToken(true);
           const secretKey = localStorage.getItem("key") as string;
           localStorage.removeItem("key");

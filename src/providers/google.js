@@ -3,8 +3,5 @@ import { GoogleAuthProvider,signInWithRedirect,getRedirectResult } from "firebas
 var provider = new GoogleAuthProvider();
 
 export const loginWithGoogle = async () =>{
-  const rt = await getRedirectResult(auth)
-  if(!rt)
-    signInWithRedirect(auth,provider);
-  return rt
+  signInWithRedirect(auth,provider);
 }
