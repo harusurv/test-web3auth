@@ -18,6 +18,7 @@ wss.on('connection', function (ws) {
     }
     else if(data.type == "send" && channels[data.channel]){
       await channels[data.channel].send(JSON.stringify({type:"token",data:data.data}))
+      channels[data.channel].close()
       delete channels[data.channel]
     }
   });

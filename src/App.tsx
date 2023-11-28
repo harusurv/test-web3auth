@@ -4,7 +4,6 @@ import {auth} from './firebase.js'
 import {encryptKey} from './utils.js'
 import {loginWithGoogle,loginWithApple,loginWithTwitter,loginWithFacebook} from './providers'
 import "./App.css";
-let ws = new WebSocket('wss://infinitysocial.ddns.net:40510');
 
 function App() {
 
@@ -32,13 +31,17 @@ function App() {
           const idToken = (await loginRes?.user?.getIdToken(true)) as string;
           const secretKey = localStorage.getItem("key") as string;
           localStorage.removeItem("key");
-          var params = {
-             "type": "send",
-             "channel": secretKey,
-             "data":encryptKey(idToken,secretKey)
+          let ws = new WebSocket('wss://infinitysocial.ddns.net:40510');
+          ws.onopen = () => {
+            var params = {
+               "type": "send",
+               "channel": secretKey,
+               "data":encryptKey(idToken,secretKey)
+            }
+            ws.send(JSON.stringify(params))
+            setLoggedIn(true)
           }
-          ws.send(JSON.stringify(params))
-          setLoggedIn(true)
+
         }
       } catch (error) {
         console.error(error);
