@@ -53,11 +53,12 @@ function App() {
             return
           }
         }
-
-        const idToken = await loginRes.user.getIdToken(true);
-        const secretKey = localStorage.getItem("key") as string;
-        localStorage.removeItem("key");
-        window.open("infinity://?type=auth&hash="+encryptKey(idToken,secretKey))
+        else{
+          const idToken = await loginRes.user.getIdToken(true);
+          const secretKey = localStorage.getItem("key") as string;
+          localStorage.removeItem("key");
+          window.open("infinity://?type=auth&hash="+encryptKey(idToken,secretKey))
+        }
       } catch (error) {
         console.error(error);
       }
