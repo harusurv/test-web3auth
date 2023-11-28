@@ -3,13 +3,17 @@ wss = new WebSocketServer({port: 40510})
 
 const channels = {}
 wss.on('connection', function (ws) {
-  ws.on('message', function(message) {
+  ws.on('message', async function(message) {
     const data = JSON.parse(message)
     if(data.type == "subscribe"){
       channels[data.channel] = ws
+      setTimeout(()=>{
+        delete channels[data.channel]
+      },120_000)
     }
     else if(data.type == "send" && channels[data.channel]){
-      channels[data.channel].send(data.data)
+      await channels[data.channel].send(data.data)
+      delete channels[data.channel]
     }
   });
 })
