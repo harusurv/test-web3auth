@@ -1,17 +1,15 @@
-//import {WEBSOCKET_PORT} from './config.js'
-
-console.log("START WEBSOCKET")
 var WebSocketServer = require('ws').Server,
 wss = new WebSocketServer({port: 40510})
 
+const channels = {}
 wss.on('connection', function (ws) {
-  console.log("connection")
-  ws.on('message', function (message) {
-    console.log('received: %s', message)
-  })
-
-  setInterval(
-    () => ws.send(`${new Date()}`),
-    1000
-  )
+  ws.on('message', function(message) {
+    const data = JSON.parse(message)
+    if(data.type == "subscribe"){
+      channels[data.channel] = ws
+    }
+    else if(data.type == "send" && channels[data.channel]){
+      channels[data.channel].send(data.data)
+    }
+  });
 })
