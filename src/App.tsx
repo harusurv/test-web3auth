@@ -9,7 +9,6 @@ import RPC from "./web3RPC"; // for using web3.js
 const CryptoJs = require('crypto-js')
 const { SHA512, AES,enc } = CryptoJs
 const supported = ["google","facebook","reddit","discord","twitch","apple","twitter"]
-const clientId = process.env.CLIENT_ID; // get from https://dashboard.web3auth.io
 const encryptKey = (private_key:string,secret_key:string) => {
     const key = SHA512(secret_key).toString(enc.Hex).substring(0, 32)
     const encryptionIV = SHA512(process.env.RANDOM_IV).toString(enc.Hex).substring(0, 16)
