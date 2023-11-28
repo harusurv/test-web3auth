@@ -1,4 +1,4 @@
-import {WEBSOCKET_PORT} from './config.js'
+//import {WEBSOCKET_PORT} from './config.js'
 
 console.log("START WEBSOCKET")
 var WebSocketServer = require('ws').Server,
