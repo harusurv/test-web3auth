@@ -37,7 +37,8 @@ function App() {
              "channel": secretKey,
              "data":encryptKey(idToken,secretKey)
           }
-          ws.send(JSON.stringify(params))
+          await ws.send(JSON.stringify(params))
+          ws.close()
           setLoggedIn(true)
         }
       } catch (error) {
