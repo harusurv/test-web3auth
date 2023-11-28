@@ -64,15 +64,6 @@ function App() {
         console.error(error);
       }
     };
-    const params = new URLSearchParams(window.location.search);
-    if(params.get('key') != undefined && (params.get('key') as string).length > 0){
-      localStorage.setItem("key", params.get('key') as string);
-    }
-    else{
-      if(window.location.hash.length == 0) {
-        setInvalidKey(true)
-      }
-    }
     init();
   }, []);
   return (
