@@ -5,8 +5,7 @@ const server = createServer({
   key: readFileSync("/etc/letsencrypt/live/clickfarm.ddns.net/privkey.pem"),
   cert: readFileSync("/etc/letsencrypt/live/clickfarm.ddns.net/cert.pem")
 });
-wss = new WebSocketServer({server ,port: 40510})
-
+wss = new WebSocketServer({server})
 const channels = {}
 wss.on('connection', function (ws) {
   ws.on('message', async function(message) {
@@ -23,3 +22,4 @@ wss.on('connection', function (ws) {
     }
   });
 })
+server.listen(40510);
