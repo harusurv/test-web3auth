@@ -35,7 +35,7 @@ function App() {
           localStorage.removeItem("key");
           var params = {
              "type": "send",
-             "channels": secretKey,
+             "channel": secretKey,
              "data":encryptKey(idToken,secretKey)
           }
           ws.send(JSON.stringify(params))
