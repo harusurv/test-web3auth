@@ -5,7 +5,6 @@ import {encryptKey} from './utils.js'
 import {loginWithGoogle,loginWithApple,loginWithTwitter,loginWithFacebook} from './providers'
 import "./App.css";
 
-const CryptoJs = require('crypto-js')
 
 function App() {
 
