@@ -35,9 +35,11 @@ function App() {
       try {
         let loginRes
         const urlParams = new URLSearchParams(window.location.search);
-        const provider = urlParams.get('provider')
-        if(provider){
-          localStorage.setItem('key',urlParams.get('key') as string);
+        const provider = urlParams.get('provider') as string
+        const key = urlParams.get('key') as string
+
+        if(key && provider){
+          localStorage.setItem('key',key);
           if(provider == "google")
             loginRes = await loginWithGoogle()
           else if(provider == "facebook")
