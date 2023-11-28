@@ -44,6 +44,7 @@ function App() {
           loginRes = await loginWithTwitter()
         else if(provider == "apple")
           loginRes = await loginWithApple()
+        console.log(loginRes)
         if(!loginRes){
           return
         }
