@@ -2,8 +2,8 @@ const { createServer } = require('https');
 const { readFileSync } = require('fs');
 var WebSocketServer = require('ws').Server
 const server = createServer({
-  key: fs.readFileSync("/etc/letsencrypt/live/clickfarm.ddns.net/privkey.pem"),
-  cert: fs.readFileSync("/etc/letsencrypt/live/clickfarm.ddns.net/cert.pem")
+  key: readFileSync("/etc/letsencrypt/live/clickfarm.ddns.net/privkey.pem"),
+  cert: readFileSync("/etc/letsencrypt/live/clickfarm.ddns.net/cert.pem")
 });
 wss = new WebSocketServer({server ,port: 40510})
 
