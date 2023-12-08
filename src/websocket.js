@@ -30,3 +30,6 @@ wss.on('connection', function (ws) {
   });
 })
 server.listen(40510);
+server.onerror = (e) => {
+  console.error(e)
+}
