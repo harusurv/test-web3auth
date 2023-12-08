@@ -28,8 +28,11 @@ wss.on('connection', function (ws) {
     }
 
   });
+  ws.onerror = function () {
+    console.log('websocket error')
+  }
 })
-server.listen(40510);
+server.listen(40510, () => console.log(`Listening on ${40510}`));
 server.onerror = (e) => {
   console.error(e)
 }
