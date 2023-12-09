@@ -9,7 +9,7 @@ export const loginWithEmail = (email) =>{
     handleCodeInApp: true
   };
   return new Promise((resolve)=>{
-    const resolveEmail = () => {
+    const resolveEmail =async () => {
       return new Promise((resolve)=>{
         if (isSignInWithEmailLink(auth, window.location.href)) {
           signInWithEmailLink(auth, email, window.location.href)
