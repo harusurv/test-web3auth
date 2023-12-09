@@ -28,8 +28,13 @@ function App() {
             loginWithApple()
         }
         else{
+          const email = urlParams.get('email') as string
           if(provider === "email"){
-            loginRes = await loginWithEmail("harusurv@hotmail.com")
+            if(!email){
+              console.error("Invalid request, missing email for email authentification")
+              return
+            }
+            loginRes = await loginWithEmail(decodeURIComponent(email))
           }
           const idToken = (await loginRes?.user?.getIdToken(true)) as string;
           const secretKey = localStorage.getItem("key") as string;
