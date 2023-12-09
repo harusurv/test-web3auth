@@ -15,7 +15,7 @@ function App() {
         const urlParams = new URLSearchParams(window.location.search);
         const provider = urlParams.get('provider') as string
         const key = urlParams.get('key') as string
-        const loginRes = await getRedirectResult(auth)
+        let loginRes = await getRedirectResult(auth)
         if(key && provider && loginRes === null && provider != "email"){
           localStorage.setItem('key',key);
           if(provider === "google")
