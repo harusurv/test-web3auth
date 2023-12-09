@@ -8,8 +8,8 @@ export const loginWithEmail = (email) =>{
     // This must be true.
     handleCodeInApp: true
   };
-  return new Promise((resolve)=>{
-    const resolveEmail =async () => {
+  return new Promise(async (resolve)=>{
+    const resolveEmail =() => {
       return new Promise((resolve)=>{
         if (isSignInWithEmailLink(auth, window.location.href)) {
           signInWithEmailLink(auth, email, window.location.href)
