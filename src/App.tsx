@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getRedirectResult } from "firebase/auth";
 import {auth} from './firebase.js'
 import {encryptKey} from './utils.js'
-import {loginWithGoogle,loginWithApple,loginWithTwitter,loginWithFacebook} from './providers'
+import {loginWithGoogle,loginWithApple,loginWithTwitter,loginWithFacebook,loginWithEmail} from './providers'
 import "./App.css";
 
 function App() {
