@@ -7,3 +7,10 @@ export const encryptKey = (private_key:string,secret_key:string) => {
     var crypted = AES.encrypt(private_key, key, {iv:encryptionIV});
     return crypted.toString()
 }
+export const sleep = (ms) => {
+  return new Promise((resolve)=>{
+    setTimeout(()=>{
+      resolve(true)
+    },ms)
+  })
+}

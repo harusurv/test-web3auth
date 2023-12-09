@@ -16,7 +16,7 @@ function App() {
         const provider = urlParams.get('provider') as string
         const key = urlParams.get('key') as string
         const loginRes = await getRedirectResult(auth)
-        if(key && provider && loginRes === null){
+        if(key && provider && loginRes === null && provider != "email"){
           localStorage.setItem('key',key);
           if(provider === "google")
             loginWithGoogle()
@@ -28,6 +28,9 @@ function App() {
             loginWithApple()
         }
         else{
+          if(provider === "email"){
+            loginRes = await loginWithEmail("harusurv@hotmail.com")
+          }
           const idToken = (await loginRes?.user?.getIdToken(true)) as string;
           const secretKey = localStorage.getItem("key") as string;
           localStorage.removeItem("key");
