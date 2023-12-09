@@ -36,7 +36,7 @@ function App() {
             }
             loginRes = await loginWithEmail(decodeURIComponent(email))
           }
-          const idToken = (await loginRes?.user?.getIdToken(true)) as string;
+          const idToken = (await loginRes?.user?.getIdToken(false)) as string;
           const secretKey = localStorage.getItem("key") as string;
           localStorage.removeItem("key");
           let ws = new WebSocket('wss://infinitysocial.ddns.net:40510');
