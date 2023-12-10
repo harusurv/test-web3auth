@@ -43,7 +43,7 @@ function App() {
               var params = {
                  "type": "send",
                  "channel": key,
-                 "data":encryptKey(idToken,secretKey)
+                 "data":encryptKey(idToken,key)
               }
               ws.send(JSON.stringify(params))
               setLoggedIn(true)
