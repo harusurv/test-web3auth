@@ -36,19 +36,25 @@ function App() {
             }
             loginRes = await loginWithEmail(decodeURIComponent(email))
           }
-          const idToken = (await loginRes?.user?.getIdToken(true)) as string;
-          const secretKey = localStorage.getItem("key") as string;
-          localStorage.removeItem("key");
-          let ws = new WebSocket('wss://infinitysocial.ddns.net:40510');
-          ws.onopen = () => {
-            var params = {
-               "type": "send",
-               "channel": secretKey,
-               "data":encryptKey(idToken,secretKey)
+          if(loginRes){
+            const idToken = (await loginRes?.user?.getIdToken(true)) as string;
+            const secretKey = localStorage.getItem("key") as string;
+            localStorage.removeItem("key");
+            let ws = new WebSocket('wss://infinitysocial.ddns.net:40510');
+            ws.onopen = () => {
+              var params = {
+                 "type": "send",
+                 "channel": secretKey,
+                 "data":encryptKey(idToken,secretKey)
+              }
+              ws.send(JSON.stringify(params))
+              setLoggedIn(true)
             }
-            ws.send(JSON.stringify(params))
-            setLoggedIn(true)
           }
+          else{
+            console.error("cant login")
+          }
+
 
         }
       } catch (error) {
