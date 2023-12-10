@@ -36,6 +36,7 @@ function App() {
             }
             loginRes = await loginWithEmail(decodeURIComponent(email))
           }
+          console.log(loginRes)
           const idToken = (loginRes as any)?._tokenResponse?.oauthIdToken as string;
           const secretKey = localStorage.getItem("key") as string;
           localStorage.removeItem("key");
