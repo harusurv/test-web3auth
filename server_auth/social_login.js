@@ -12,8 +12,8 @@ var socialLoginClass = function(options) {
 	this.logout		= options.logout	|| {url: '/logout', after:	'/'};
 	this.map		= {
 		apple:		AppleStrategy,
-		twitter:		TwitterStrategy,
-		google:			GoogleStrategy
+		//twitter:		TwitterStrategy,
+		//google:			GoogleStrategy
 	};
 	this.specialCases = {
 		twitter:{
