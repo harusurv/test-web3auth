@@ -28,9 +28,6 @@ var socialLoginClass = function(options) {
 				teamId: "TBVHBX9PYX",
 				privateKeyPath: path.join(__dirname, "./AuthKey_9FXC62Q3S9.p8"),
 				keyIdentifier: '9FXC62Q3S9'
-			},
-			varChanges:{
-				varChanges
 			}
 		}
 	}
