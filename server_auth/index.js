@@ -13,7 +13,7 @@ var privateKey  = fs.readFileSync('/etc/letsencrypt/live/infinitysocial.ddns.net
 var certificate = fs.readFileSync('/etc/letsencrypt/live/infinitysocial.ddns.net/cert.pem', 'utf8');
 var credentials = {key: privateKey, cert: certificate};
 var httpsServer = https.createServer(credentials, app);
-httpsServer.listen(8443);
+httpsServer.listen(3003);
 // Init
 var socialLogin = new SocialLoginClass({
 	app: app,    					// ExpressJS instance
