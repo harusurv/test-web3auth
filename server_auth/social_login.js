@@ -1,6 +1,6 @@
 var passport 			= require('passport');
-var GoogleStrategy 		= require('passport-google-oauth20').Strategy;
-var TwitterStrategy 	= require('passport-twitter-oauth2.0').Strategy;
+//var GoogleStrategy 		= require('passport-google-oauth20').Strategy;
+//var TwitterStrategy 	= require('passport-twitter-oauth2.0').Strategy;
 var AppleStrategy 	= require('passport-appleid').Strategy;
 
 const path = require('path')

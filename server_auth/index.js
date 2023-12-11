@@ -25,6 +25,7 @@ var socialLogin = new SocialLoginClass({
 });
 
 socialLogin.use({
+  /*
 	google:	{
 		settings:	{
 		  clientID:"1028970182942-9a379po6lqvbdmj17nhm5ud78qf3ss3a.apps.googleusercontent.com",
@@ -51,7 +52,7 @@ socialLogin.use({
       success:	'/',
       fail:		'/auth/twitter/fail'
     }
-  }/*,
+  },*/
   apple: {
     settings:	{
       clientID:"com.infinitywallet.auth",
@@ -63,5 +64,5 @@ socialLogin.use({
       success:	'/',
       fail:		'/auth/apple/fail'
     }
-  }*/
+  }
 });
