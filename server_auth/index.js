@@ -3,11 +3,16 @@ var express = require('express');
 var session = require('express-session')
 const SocialLoginClass = require('./social_login.js')
 var app = express();
+var fs = require('fs')
 app.use(session({secret:"sadasdsadniancatasdasdasdadasda"}));
 
-app.listen(3003, () => {
-  console.log(`Example app listening on port ${3003}`)
-})
+
+
+var privateKey  = fs.readFileSync('/etc/letsencrypt/live/infinitysocial.ddns.net/privkey.pem', 'utf8');
+var certificate = fs.readFileSync('/etc/letsencrypt/live/infinitysocial.ddns.net/cert.pem', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
+var httpsServer = https.createServer(credentials, app);
+httpsServer.listen(8443);
 // Init
 var socialLogin = new SocialLoginClass({
 	app: app,    					// ExpressJS instance
