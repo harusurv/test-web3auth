@@ -11,7 +11,7 @@ var socialLoginClass = function(options) {
 	this.url		= options.url		|| 'https://infinitysocial.ddns.net:3003';
 	this.logout		= options.logout	|| {url: '/logout', after:	'/'};
 	this.map		= {
-		apple:		AppleStrategy,
+		//apple:		AppleStrategy,
 		twitter:		TwitterStrategy,
 		google:			GoogleStrategy
 	};
