@@ -111,6 +111,7 @@ socialLoginClass.prototype.setup = function(type, settings) {
 	if (this.specialCases[type] && this.specialCases[type].setup) {
 		passportSetup = {...passportSetup,...this.specialCases[type].setup}
 	}
+	console.log(passportSetup)
 	passport.use(new (this.map[type])(passportSetup, function (req, accessToken, refreshToken,  params,profile, done) {
 		scope.onAuth(req, type, accessToken, refreshToken,  params,profile, done);
 	}));
