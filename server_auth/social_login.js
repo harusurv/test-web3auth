@@ -129,7 +129,6 @@ socialLoginClass.prototype.setup = function(type, settings) {
 			})(varname);
 		}
 	}
-	console.log(passportSetup)
 	passport.use(new (this.map[type])(passportSetup, function (req, accessToken, refreshToken,  params,profile, done) {
 		scope.onAuth(req, type, accessToken, refreshToken,  params,profile, done);
 	}));
