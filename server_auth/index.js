@@ -54,7 +54,7 @@ socialLogin.use({
   },
   apple: {
     settings:	{
-      clientID:"com.infinitywallet.auth",
+      clientID:"TBVHBX9PYX.com.infinitywallet.auth",
       clientSecret:"TBVHBX9PYX"
     },
     url:	{
