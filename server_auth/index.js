@@ -51,10 +51,10 @@ socialLogin.use({
       clientID: 		"9FXC62Q3S9"
     },
     url:	{
-      auth:		"/auth/twitter",
-      callback: 	"/auth/twitter/callback",
+      auth:		"/auth/apple",
+      callback: 	"/auth/apple/callback",
       success:	'/',
-      fail:		'/auth/twitter/fail'
+      fail:		'/auth/apple/fail'
     }
   }
 });
