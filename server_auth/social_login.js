@@ -8,7 +8,7 @@ var socialLoginClass = function(options) {
 	var scope 		= this;
 	this.app 		= options.app 		|| {};
 	this.onAuth 	= options.onAuth 	|| function() {};
-	this.url		= options.url		|| 'https://infinitysocial.ddns.net:3003';
+	this.url		= options.url		|| 'https://infinitysocial.ddns.net';
 	this.logout		= options.logout	|| {url: '/logout', after:	'/'};
 	this.map		= {
 		apple:		AppleStrategy,
