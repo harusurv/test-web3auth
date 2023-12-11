@@ -54,7 +54,8 @@ socialLogin.use({
   },
   apple: {
     settings:	{
-      clientID:"9FXC62Q3S9"
+      clientID:"9FXC62Q3S9",
+      clientSecret:"TBVHBX9PYX"
     },
     url:	{
       auth:		"/auth/apple",

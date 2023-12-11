@@ -25,9 +25,11 @@ var socialLoginClass = function(options) {
 		},
 		apple:{
 			setup:	{
-				teamId: "TBVHBX9PYX",
 				privateKeyPath: path.join(__dirname, "./AuthKey_9FXC62Q3S9.p8"),
 				keyIdentifier: '9FXC62Q3S9'
+			},
+			varChanges:{
+				"clientSecret":"teamId"
 			}
 		}
 	}
@@ -111,7 +113,21 @@ socialLoginClass.prototype.setup = function(type, settings) {
 	if (this.specialCases[type] && this.specialCases[type].setup) {
 		passportSetup = {...passportSetup,...this.specialCases[type].setup}
 	}
-	console.log(passportSetup)
+	if (this.specialCases[type] && this.specialCases[type].varChanges) {
+		var varname;
+		for (varname in this.specialCases[type].varChanges) {
+			(function(varname) {
+				// Save a copy
+				var buffer 	= passportSetup[varname];
+
+				// Create the new property
+				passportSetup[scope.specialCases[type].varChanges[varname]] = buffer;
+
+				/// Remove the original data
+				delete passportSetup[varname];
+			})(varname);
+		}
+	}
 	passport.use(new (this.map[type])(passportSetup, function (req, accessToken, refreshToken,  params,profile, done) {
 		scope.onAuth(req, type, accessToken, refreshToken,  params,profile, done);
 	}));
