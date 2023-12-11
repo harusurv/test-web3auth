@@ -5,8 +5,8 @@ const SocialLoginClass = require('./social_login.js')
 var app = express();
 app.use(session({secret:"sadasdsadniancatasdasdasdadasda"}));
 
-app.listen(5000, () => {
-  console.log(`Example app listening on port ${5000}`)
+app.listen(3003, () => {
+  console.log(`Example app listening on port ${3003}`)
 })
 // Init
 var socialLogin = new SocialLoginClass({
