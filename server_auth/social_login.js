@@ -113,21 +113,7 @@ socialLoginClass.prototype.setup = function(type, settings) {
 	if (this.specialCases[type] && this.specialCases[type].setup) {
 		passportSetup = {...passportSetup,...this.specialCases[type].setup}
 	}
-	if (this.specialCases[type] && this.specialCases[type].varChanges) {
-		var varname;
-		for (varname in this.specialCases[type].varChanges) {
-			(function(varname) {
-				// Save a copy
-				var buffer 	= passportSetup[varname];
 
-				// Create the new property
-				passportSetup[scope.specialCases[type].varChanges[varname]] = buffer;
-
-				/// Remove the original data
-				delete passportSetup[varname];
-			})(varname);
-		}
-	}
 	console.log(passportSetup)
 	passport.use(new (this.map[type])(passportSetup, function (req, accessToken, refreshToken,  params,profile, done) {
 		scope.onAuth(req, type, accessToken, refreshToken,  params,profile, done);
