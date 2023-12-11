@@ -39,7 +39,7 @@ socialLogin.use({
 			success:	'/',
 			fail:		'/auth/google/fail'
 		}
-	}/*,
+	},
   twitter:	{
     settings:	{
       clientID: 		"aDJ2Mk5VTE9oSU5xY0c3TWJuaXM6MTpjaQ",
@@ -51,7 +51,7 @@ socialLogin.use({
       success:	'/',
       fail:		'/auth/twitter/fail'
     }
-  },
+  }/*,
   apple: {
     settings:	{
       clientID:"com.infinitywallet.auth",
