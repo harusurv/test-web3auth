@@ -1,7 +1,7 @@
 var passport 			= require('passport');
 var GoogleStrategy 		= require('passport-google-oauth20').Strategy;
 var TwitterStrategy 	= require('passport-twitter-oauth2.0').Strategy;
-var AppleStrategy 	= require('passport-appleid').Strategy;
+var AppleStrategy 	= require('passport-appleid');
 
 const path = require('path')
 var socialLoginClass = function(options) {
@@ -11,7 +11,7 @@ var socialLoginClass = function(options) {
 	this.url		= options.url		|| 'https://infinitysocial.ddns.net:3003';
 	this.logout		= options.logout	|| {url: '/logout', after:	'/'};
 	this.map		= {
-		apple:		AppleStrategy,
+		//apple:		AppleStrategy,
 		twitter:		TwitterStrategy,
 		google:			GoogleStrategy
 	};
