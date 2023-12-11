@@ -1,8 +1,8 @@
 var passport 			= require('passport');
 var GoogleStrategy 		= require('passport-google-oauth20').Strategy;
-var TwitterStrategy 	= require('passport-twitter-oauth2.0').Strategy;
+//var TwitterStrategy 	= require('passport-twitter-oauth2.0').Strategy;
 const path = require('path')
-var AppleStrategy 	= require('passport-appleid').Strategy;
+//var AppleStrategy 	= require('passport-appleid').Strategy;
 var socialLoginClass = function(options) {
 	var scope 		= this;
 	this.app 		= options.app 		|| {};
